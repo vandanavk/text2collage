@@ -5,6 +5,8 @@ import os
 from treelib import *
 from PIL import Image
 from PIL import ImageFile
+import matplotlib.pyplot as plt
+
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -381,7 +383,7 @@ class Environment:
             imgkey = list(imgdata.keys())[i]
             (ar, ti), pix = imgdata[imgkey]
             ti = float(ti) / float(sumt)
-            imgdata[imgkey] = ((ar, round(ti, 2)), pix)
+            imgdata[imgkey] = ((ar, round(ti, 6)), pix)
 
         gen, popsize, Pc, Pm, lam = GAparams
         ga = Agent(canvasw, canvash, beta, imgdata, gen, popsize, Pc, Pm, lam)
@@ -399,6 +401,19 @@ class Environment:
                     if pnode.data.name == 'H':
                         c.data.y1 += int(indi.siblings(c.identifier)[0].data.height)
 
+        # x = [i for i in range(len(stats))]
+        # y = [float(stats[i]['min']) for i in range(len(stats))]
+        # plt.plot(x, y)
+        # plt.xticks(np.arange(min(x), max(x) + 1, 20.0), rotation='vertical')
+        # plt.xlabel('Generations')
+        # plt.ylabel('Fitness')
+        # plt.title('Fitness value over GA iterations')
+        # plt.savefig('costvsgen_' + str(Pc) + '_' + str(Pm) + '.png')
+        # plt.clf()
+
+        node = indi.get_node(1)
+        cw = int(node.data.width)
+        ch = int(node.data.height)
         imginfo = {}
         for i in range(len(imgdata), len(indi.nodes) + 1):
             try:
@@ -429,4 +444,4 @@ class Environment:
                 pass
 
         y = [float(stats[i]['min']) for i in range(len(stats))]
-        return y, imginfo
+        return y, imginfo, (cw, ch)

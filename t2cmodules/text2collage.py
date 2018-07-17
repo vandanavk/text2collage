@@ -92,7 +92,7 @@ def text2collage(option='collection', d='', cw=1920, ch=1080, beta=3, imp='rando
                 elif imp == 'auto':
                     emphasis = imageemphasis.emphasisFromText(scores, imagelist)
 
-                fitness, imginfo = layoutoptimizer.Environment().main(keywords, filename, foldername, canvasw, canvash, beta, GAparams, emphasis)
+                fitness, imginfo, (cw, ch) = layoutoptimizer.Environment().main(keywords, filename, foldername, canvasw, canvash, beta, GAparams, emphasis)
 
                 imagewriter.writeToFile(foldername, filename, imginfo, keywords, cw, ch, opfile)
 
